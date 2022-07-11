@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<div class="text-end">
+	<%= link_to 'Edit', edit_cliente_path(@cliente) %> |
+	<%= link_to 'Back', clientes_path %>
+</div>
+
+<div class="card">
+	<div class="card-header">
+		<div class="row">
+			<div class="col-11">
+				Cliente Nº <%= @cliente.id %>
+			</div>
+		</div>
+	</div>
+	<div class="card-body">
+		<h5 class="card-title">
+			<strong>Nome:</strong>
+			<%= @cliente.nome %>
+		</h5>
+		<p class="card-text">
+			<strong>Tamanho:</strong>
+			<%= @cliente.tamanho %>
+		</p>
+	</div>
+</div>
+

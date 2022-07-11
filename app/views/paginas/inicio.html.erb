@@ -1,0 +1,59 @@
+<div class="row" style="margin-top:20px">
+	<div class="col-12">
+		<div class="card">
+			<div class="row">
+				<div class="col-4" style="text-align: center">
+					<h1><%=@customers_ativos.count%></h1>
+					<h6>Customers Ativos</h6>
+				</div>
+				<div class="col-4" style="text-align: center">
+					<h1><%=@customers_inativos.count%></h1>
+					<h6>Customers Inativos</h6>
+				</div>
+				<div class="col-4" style="text-align: center">
+					<h1><%=@clientes.count%></h1>
+					<h6>Clientes</h6>
+				</div>
+			</div>
+		</div>
+
+		<br><br>
+		<div class="card">
+			<div class="card" style="padding: 5px">
+				<div class="row">
+					<div class="col-9">
+						<h2>Balanceamento</h2>
+					</div>
+					<div class="col-3">
+						<%= link_to 'Gerar Balanceamento', criar_balanciamento_path, {:style=>'margin:10px; width: 95%; color: white', :class => "btn btn-primary btn-sm"} %>
+					</div>
+				</div>				
+				<%@customers_ativos.order(:nivel).each do |customer|%>
+					<hr>
+					<h5>Customer Nivel <%= customer.nivel %> (<%= customer.nome %>)</h5>
+					<%Balanciamento.where('id_costumer = ?', customer.id).each do |balanceamento|%>
+						<h6>Cliente Nº <%= balanceamento.cliente.id %> (<%= balanceamento.cliente.nome %>)</h5>
+					<%end%>
+				<%end%>
+				
+				<%if Balanciamento.any?%>
+					<%if Balanciamento.last.customer_mais_ocupado != 0%>
+						<hr>
+						<div class="card" style="padding: 5px">
+							<div class="row">
+								<h6>O Customer Success com mais clientes é o Nº <%= Balanciamento.last.customer_mais_ocupado.id %> - <%= Balanciamento.last.customer_mais_ocupado.nome %> (Nivel <%= Balanciamento.last.customer_mais_ocupado.nivel %>) com <%= Balanciamento.last.quantidade_de_clientes_customer_mais_ocupado %> clientes</h6>
+							</div>
+						</div>
+					<%else%>
+						<hr>
+						<div class="card" style="padding: 5px">
+							<div class="row">
+								<h6>Não existe Customer Success com mais clientes. Retorno 0</h6>
+							</div>
+						</div>
+					<%end%>
+				<%end%>
+			</div>
+		</div>
+	</div>
+</div>

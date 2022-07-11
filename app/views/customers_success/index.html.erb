@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container-fluid">
+
+	<h1>Customers Success</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col" width="50%">Nome</th>
+				<th scope="col">Nivel</th>
+				<th scope="col">Status</th>
+				<th colspan="3"></th>
+			</tr>
+		</thead>
+		<tbody class="table-group-divider">
+			<% @customers_success.each do |customer_success| %>
+				<tr>
+					<td><%= customer_success.id %></td>
+					<td><%= customer_success.nome %></td>
+					<td><%= customer_success.nivel %></td>
+					<% if customer_success.status == 'ativo' %>
+						<td><span class="badge text-bg-success">ATIVO</span></td>
+					<% else %>
+						<td><span class="badge text-bg-danger"><%= customer_success.status.upcase %></span></td>
+					<% end %>
+					<td><%= link_to 'Show', customer_success %></td>
+					<td><%= link_to 'Edit', edit_customer_success_path(customer_success) %></td>
+					<td><%= link_to 'Destroy', customer_success, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+
+<br>
+
+<div class="text-end">
+	<%= link_to 'New Customer Success', new_customer_success_path %>
+</div>
